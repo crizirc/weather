@@ -10,7 +10,16 @@ class HomeController(val service: OpenWeatherMapService) {
 
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
     fun deliverImage() : String {
-        val weather = service.getCurrentWeather(51.33, 12.35)
+        val weather = service.getCurrentWeather(51.33, 12.35,5)
+        val tableRows = mutableListOf<String>()
+        weather.temperatures.forEach { temperature ->
+            tableRows.add("""
+    <tr>
+        <td>${weather.city}</td>
+        <td>${temperature.temperature}°C </td>
+        <td>${temperature.condition}</td>
+    </tr>            
+        """.trimIndent()) }
         return """
              <!DOCTYPE html>
 <html>
@@ -24,22 +33,7 @@ class HomeController(val service: OpenWeatherMapService) {
         <th>Temp.</th>
         <th>Wetter</th>
     </tr>
-    <tr>
-        <td>${weather.city}</td>
-        <td>${weather.temperatures[0].temperature}°C </td>
-        <td>${weather.temperatures[0].condition}</td>
-    </tr>
-    <tr>
-        <td>${weather.city}</td>
-        <td>${weather.temperatures[1].temperature}°C </td>
-        <td>${weather.temperatures[1].condition}</td>
-    </tr><tr>
-        <td>${weather.city}</td>
-        <td>${weather.temperatures[2].temperature}°C </td>
-        <td>${weather.temperatures[2].condition}</td>
-    </tr>
-        
-        
+    ${tableRows.joinToString("")}        
 </table>
 </body>
 </html> 

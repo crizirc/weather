@@ -1,29 +1,28 @@
 package net.sprd.internship.weather.openweathermap
 
-import org.springframework.http.HttpMethod
-import org.springframework.http.client.ClientHttpRequestFactory
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
-import java.net.URI
 
 @Service
 class OpenWeatherMapService {
 
-    fun getCurrentWeather(latitude: Double, longitude: Double): CurrentWeatherDto {
+    fun getCurrentWeather(latitude: Double, longitude: Double, anzahleintraege: Int): CurrentWeatherDto {
         // https://api.openweathermap.org/data/2.5/forecast?lat=51.2&lon=12.22&appid=8d151fa8160db5287a61fc40f0b091e5&units=metric
         val requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=8d151fa8160db5287a61fc40f0b091e5&units=metric"
         val weatherData = RestClient.create(requestUrl).get().retrieve().body<WeatherData>()
+
         System.out.println(weatherData!!.list[0].weather[0].description)
         System.out.println(weatherData.list[1].weather[0].description)
         System.out.println(weatherData.list[2].weather[0].description)
 
 
-        val temps = listOf(
-            TemperatureEntry(weatherData.list[0].main.temp, weatherData.list[0].weather[0].description),
-            TemperatureEntry(weatherData.list[1].main.temp, weatherData.list[1].weather[0].description),
-            TemperatureEntry(weatherData.list[2].main.temp, weatherData.list[2].weather[0].description)
-        )
+        val temps = mutableListOf<TemperatureEntry>()
+        for(i in 0..<anzahleintraege) {
+            temps.add(TemperatureEntry(weatherData.list[i].main.temp, weatherData.list[i].weather[0].description))
+
+        }
+
         return CurrentWeatherDto(weatherData.city.name, temps )
     }
 }
