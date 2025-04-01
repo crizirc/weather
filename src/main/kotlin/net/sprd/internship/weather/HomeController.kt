@@ -26,10 +26,18 @@ class HomeController(val service: OpenWeatherMapService) {
     </tr>
     <tr>
         <td>${weather.city}</td>
-        <td>${weather.temperature}°C </td>
-        <td>${weather.condition}</td>
+        <td>${weather.temperatures[0].temperature}°C </td>
+        <td>${weather.temperatures[0].condition}</td>
     </tr>
-    
+    <tr>
+        <td>${weather.city}</td>
+        <td>${weather.temperatures[1].temperature}°C </td>
+        <td>${weather.temperatures[1].condition}</td>
+    </tr><tr>
+        <td>${weather.city}</td>
+        <td>${weather.temperatures[2].temperature}°C </td>
+        <td>${weather.temperatures[2].condition}</td>
+    </tr>
         
         
 </table>
