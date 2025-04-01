@@ -3,6 +3,7 @@ package net.sprd.internship.weather.openweathermap
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
+import java.util.Date
 
 @Service
 class OpenWeatherMapService {
@@ -12,26 +13,30 @@ class OpenWeatherMapService {
         val requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=8d151fa8160db5287a61fc40f0b091e5&units=metric"
         val weatherData = RestClient.create(requestUrl).get().retrieve().body<WeatherData>()
 
-        System.out.println(weatherData!!.list[0].weather[0].description)
+        System.out.println(weatherData!!.list[0].dt_txt)
         System.out.println(weatherData.list[1].weather[0].description)
         System.out.println(weatherData.list[2].weather[0].description)
 
 
         val temps = mutableListOf<TemperatureEntry>()
         for(i in 0..<anzahleintraege) {
-            temps.add(TemperatureEntry(weatherData.list[i].main.temp, weatherData.list[i].weather[0].description))
+            temps.add(TemperatureEntry(weatherData.list[i].main.temp, weatherData.list[i].weather[0].description,weatherData.list[i].dt_txt))
 
         }
 
-        return CurrentWeatherDto(weatherData.city.name, temps )
+        return CurrentWeatherDto(
+            weatherData.city.name, temps
+
+        )
     }
 }
 
 data class WeatherData(val city:City,val list: List<Forecast>)
-data class Forecast(val main:Main,val weather: List<WeatherEntry>)
+data class Forecast(val main:Main,val weather: List<WeatherEntry>,val dt_txt:String)
 data class WeatherEntry(val main:String,val description:String)
 data class Main(val temp:Double)
 data class City(val name:String)
 
+
 data class CurrentWeatherDto(val city: String, val temperatures:List<TemperatureEntry>)
-data class TemperatureEntry(val temperature: Double, val condition: String)
+data class TemperatureEntry(val temperature: Double, val condition: String,val dateTime: String)

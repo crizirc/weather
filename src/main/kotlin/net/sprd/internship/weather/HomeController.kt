@@ -18,6 +18,7 @@ class HomeController(val service: OpenWeatherMapService) {
         <td>${weather.city}</td>
         <td>${temperature.temperature}°C </td>
         <td>${temperature.condition}</td>
+        <td>${temperature.dateTime}</td>
     </tr>            
         """.trimIndent()) }
         return """
@@ -32,6 +33,7 @@ class HomeController(val service: OpenWeatherMapService) {
         <th>Ort</th>
         <th>Temp.</th>
         <th>Wetter</th>
+        <th>Datum/Uhrzeit</th>
     </tr>
     ${tableRows.joinToString("")}        
 </table>
