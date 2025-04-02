@@ -44,8 +44,8 @@ class HomeController(val service: OpenWeatherMapService) {
       ${weather.city}
     </div>
     <div style="font-size: 40px;">
-      ☀
-        ${weather.temperatures[0].temperature}°C
+      
+      ☀  ${weather.temperatures[0].temperature}°C
     </div>
   </div>
   <table style="font-size:18px;">

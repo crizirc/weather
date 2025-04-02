@@ -1,18 +1,17 @@
 package net.sprd.internship.weather.openweathermap
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.body
-import java.util.Date
 
 @Service
-class OpenWeatherMapService {
+class OpenWeatherMapService(@Value("\${appId}") private val appId:String) {
 
     @Cacheable("getCurrentWeather")
     fun getCurrentWeather(latitude: Double, longitude: Double, anzahleintraege: Int): CurrentWeatherDto {
-        // https://api.openweathermap.org/data/2.5/forecast?lat=51.2&lon=12.22&appid=8d151fa8160db5287a61fc40f0b091e5&units=metric
-        val requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=8d151fa8160db5287a61fc40f0b091e5&units=metric"
+        val requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${appId}&units=metric"
         val weatherData = RestClient.create(requestUrl).get().retrieve().body<WeatherData>()
 
         System.out.println(weatherData!!.list[0].dt_txt)
