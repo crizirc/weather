@@ -1,0 +1,11 @@
+{
+  "short_name":"Wetter",
+  "name":"Wetter",
+  "icons":[
+  ],
+  "start_url":"/",
+  "background_color":"#3d50a7",
+  "display":"standalone",
+  "theme_color":"#3d50a7",
+  "description":"Wetter"
+}

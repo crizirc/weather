@@ -26,6 +26,7 @@ class HomeController(val service: OpenWeatherMapService) {
              <!DOCTYPE html>
 <html>
 <head>
+  <link rel="manifest" href="/manifest.json">
    <style>
    
    td {
@@ -34,6 +35,18 @@ class HomeController(val service: OpenWeatherMapService) {
    }
    </style>
   <title>Wetter</title>
+  <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .register('service-worker.js')
+            .then(function (reg) {
+              console.log('Registration successful: ' + reg.scope);
+            })
+            .catch(function (err) {
+              console.error('Registration failed: ' + err);
+            });
+        }
+  </script>
 </head>
 <body>
   <div>
