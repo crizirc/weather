@@ -13,15 +13,23 @@ class HomeController(val service: OpenWeatherMapService) {
         //☀🌥☁🌧⛈
         val weather = service.getCurrentWeather(51.33, 12.35,5)
         val tableRows = mutableListOf<String>()
+        var index = 1
         weather.temperatures.forEach { temperature ->
-            tableRows.add("""
+            if (index != 1) {
+                tableRows.add(
+                    """
     <tr>
         <td>${weather.city}</td>
         <td>${temperature.temperature}°C </td>
         <td>${temperature.condition}</td>
         <td>${temperature.dateTime}</td>
     </tr>            
-        """.trimIndent()) }
+        """.trimIndent()
+                )
+            }
+            index= index.plus(1)
+
+        }
         return """
              <!DOCTYPE html>
 <html>
