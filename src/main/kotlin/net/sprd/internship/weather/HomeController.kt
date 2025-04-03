@@ -6,22 +6,59 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class HomeController(val service: OpenWeatherMapService) {
+class HomeController(
+    val service: OpenWeatherMapService,
+    openWeatherMapService: OpenWeatherMapService
+) {
 
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
     fun deliverImage() : String {
-        //☀🌥☁🌧⛈
+
         val weather = service.getCurrentWeather(51.33, 12.35,5)
         val tableRows = mutableListOf<String>()
         var index = 1
         weather.temperatures.forEach { temperature ->
             if (index != 1) {
+                var condition = temperature.condition
+                if (condition == "scattered clouds"){
+                    condition = "\uD83C\uDF25"
+                }
+                if(condition  == "clear sky") {
+                    condition ="☀"
+                }
+                if(condition  == "overcast clouds") {
+                    condition ="☁"
+                }
+                if(condition== "broken clouds") {
+                    condition ="\uD83C\uDF25"
+                }
+                if(condition== "few clouds") {
+                    condition ="\uD83C\uDF25"
+                }
+                if(condition== "rain") {
+                    condition ="\uD83C\uDF27"
+                }
+                if(condition== "shower rain") {
+                    condition ="\uD83C\uDF27"
+                }
+                if(condition== "thunderstorm") {
+                    condition ="⛈"
+                }
+                if(condition== "snow") {
+                    condition ="❄"
+                }
+                if(condition== "fog") {
+                    condition ="\uD83C\uDF2B"
+                }
+
+
+
                 tableRows.add(
                     """
     <tr>
         <td>${weather.city}</td>
         <td>${temperature.temperature}°C </td>
-        <td>${temperature.condition}</td>
+        <td title="${temperature.condition}">${condition}</td>
         <td>${temperature.dateTime}</td>
     </tr>            
         """.trimIndent()
@@ -66,7 +103,7 @@ class HomeController(val service: OpenWeatherMapService) {
     </div>
     <div style="font-size: 40px;">
       
-      ☀  ${weather.temperatures[0].temperature}°C
+      ${weather.temperatures[0].condition} ${weather.temperatures[0].temperature}°C
     </div>
   </div>
   <table style="font-size:18px;">
