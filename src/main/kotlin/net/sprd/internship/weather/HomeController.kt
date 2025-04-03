@@ -64,9 +64,31 @@ class HomeController(
             });
         }
   </script>
+  <style>
+  /* Light mode */@media (prefers-color-scheme: light) {
+      body {
+          background-color: white;
+          color: black;
+         
+      }
+      .currentweatherborder{
+      border-bottom-color: white;border-bottom-width: 4vw;border-bottom-style: solid;
+      }
+  }
+  /* Dark mode */@media (prefers-color-scheme: dark) {
+      body {
+          background-color: black;
+          color: white;
+      }
+      .currentweatherborder{
+      border-bottom-color: black;border-bottom-width: 4vw;border-bottom-style: solid;
+      }
+      
+  }
+  </style>
 </head>
 <body>
-  <div style="text-align: center; border-bottom-color: white;border-bottom-width: 4vw;border-bottom-style: solid;">
+  <div class= "currentweatherborder" style="text-align: center;">
     <div style="font-size:0.8vw;">
       ${weather.temperatures[0].dateTime}
     </div>
