@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class HomeController(
-    val service: OpenWeatherMapService,
-    openWeatherMapService: OpenWeatherMapService
+    val service: OpenWeatherMapService
 ) {
 
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
@@ -20,36 +19,7 @@ class HomeController(
         weather.temperatures.forEach { temperature ->
             if (index != 1) {
                 var condition = temperature.condition
-                if (condition == "scattered clouds"){
-                    condition = "\uD83C\uDF25"
-                }
-                if(condition  == "clear sky") {
-                    condition ="☀"
-                }
-                if(condition  == "overcast clouds") {
-                    condition ="☁"
-                }
-                if(condition== "broken clouds") {
-                    condition ="\uD83C\uDF25"
-                }
-                if(condition== "few clouds") {
-                    condition ="\uD83C\uDF25"
-                }
-                if(condition== "rain") {
-                    condition ="\uD83C\uDF27"
-                }
-                if(condition== "shower rain") {
-                    condition ="\uD83C\uDF27"
-                }
-                if(condition== "thunderstorm") {
-                    condition ="⛈"
-                }
-                if(condition== "snow") {
-                    condition ="❄"
-                }
-                if(condition== "fog") {
-                    condition ="\uD83C\uDF2B"
-                }
+                condition = conditionAsSymbol(condition)
 
 
 
@@ -67,6 +37,8 @@ class HomeController(
             index= index.plus(1)
 
         }
+        var condition = weather.temperatures[0].condition
+        condition = conditionAsSymbol(condition)
         return """
              <!DOCTYPE html>
 <html>
@@ -101,9 +73,9 @@ class HomeController(
     <div style="font-size:24px">
       ${weather.city}
     </div>
-    <div style="font-size: 40px;">
+    <div style="font-size: 40px;" title="${weather.temperatures[0].condition}">
       
-      ${weather.temperatures[0].condition} ${weather.temperatures[0].temperature}°C
+      ${condition} ${weather.temperatures[0].temperature}°C
     </div>
   </div>
   <table style="font-size:18px;">
@@ -112,5 +84,40 @@ class HomeController(
 </body>
 </html> 
         """.trimIndent()
+    }
+
+    private fun conditionAsSymbol(condition: String): String {
+        var condition1 = condition
+        if (condition1 == "scattered clouds") {
+            condition1 = "\uD83C\uDF25"
+        }
+        if (condition1 == "clear sky") {
+            condition1 = "☀"
+        }
+        if (condition1 == "overcast clouds") {
+            condition1 = "☁"
+        }
+        if (condition1 == "broken clouds") {
+            condition1 = "\uD83C\uDF25"
+        }
+        if (condition1 == "few clouds") {
+            condition1 = "\uD83C\uDF25"
+        }
+        if (condition1 == "rain") {
+            condition1 = "\uD83C\uDF27"
+        }
+        if (condition1 == "shower rain") {
+            condition1 = "\uD83C\uDF27"
+        }
+        if (condition1 == "thunderstorm") {
+            condition1 = "⛈"
+        }
+        if (condition1 == "snow") {
+            condition1 = "❄"
+        }
+        if (condition1 == "fog") {
+            condition1 = "\uD83C\uDF2B"
+        }
+        return condition1
     }
 }
