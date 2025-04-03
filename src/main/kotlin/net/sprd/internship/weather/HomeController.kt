@@ -66,19 +66,19 @@ class HomeController(
   </script>
 </head>
 <body>
-  <div>
-    <div style="font-size:13px;">
+  <div style="text-align: center; border-bottom-color: white;border-bottom-width: 4vw;border-bottom-style: solid;">
+    <div style="font-size:0.8vw;">
       ${weather.temperatures[0].dateTime}
     </div>
-    <div style="font-size:24px">
+    <div style="font-size: 2vw">
       ${weather.city}
     </div>
-    <div style="font-size: 40px;" title="${weather.temperatures[0].condition}">
+    <div style="font-size: 5vw;" title="${weather.temperatures[0].condition}">
       
       ${condition} ${weather.temperatures[0].temperature}°C
     </div>
   </div>
-  <table style="font-size:18px;">
+  <table style="font-size:2vw;width: 100%; text-align:center">
     ${tableRows.joinToString("")}        
   </table>
 </body>
