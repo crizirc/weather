@@ -67,21 +67,21 @@ class HomeController(
   <style>
   /* Light mode */@media (prefers-color-scheme: light) {
       body {
-          background-color: white;
-          color: black;
+          background-color: #ececec;
+          color: #222;
          
       }
       .currentweatherborder{
-      border-bottom-color: white;border-bottom-width: 4vw;border-bottom-style: solid;
+      border-bottom-color: #ececec;border-bottom-width: 4vw;border-bottom-style: solid;
       }
   }
   /* Dark mode */@media (prefers-color-scheme: dark) {
       body {
-          background-color: black;
-          color: white;
+          background-color:#222; ;
+          color: #ececec;
       }
       .currentweatherborder{
-      border-bottom-color: black;border-bottom-width: 4vw;border-bottom-style: solid;
+      border-bottom-color: #222;border-bottom-width: 4vw;border-bottom-style: solid;
       }
       
   }
