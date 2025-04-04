@@ -43,6 +43,9 @@ class HomeController(
              <!DOCTYPE html>
 <html>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
    <style>
    
@@ -87,7 +90,7 @@ class HomeController(
   }
   </style>
 </head>
-<body>
+<body style = "font-family:Josefin Sans, sans-serif;">
   <div class= "currentweatherborder" style="text-align: center;">
     <div style="font-size:0.8vw;">
       ${weather.temperatures[0].dateTime}
