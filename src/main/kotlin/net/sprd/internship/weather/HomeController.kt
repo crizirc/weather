@@ -9,7 +9,21 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController(
     val service: OpenWeatherMapService
 ) {
-
+val style="""
+     /*@media screen and (min-width: 600px) {*/
+      body{background-color: red;}
+      td {
+        padding: 20px;
+        padding-top: 6px;
+      }
+       @media screen and (min-width: 600px) {
+         td {
+             padding: 10px;
+             padding-top: 6px;
+            }
+       }
+"""
+    .trimIndent()
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
     fun deliverImage() : String {
 
@@ -48,11 +62,7 @@ class HomeController(
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
    <style>
-   
-   td {
-     padding: 20px;
-     padding-top: 6px;
-   }
+        $style
    </style>
   <title>Wetter</title>
   <script>
@@ -103,7 +113,7 @@ class HomeController(
       ${condition} ${weather.temperatures[0].temperature}°C
     </div>
   </div>
-  <table style="font-size:2vw;width: 100%; text-align:center">
+  <table id="weathertable" style="font-size:2vw;width: 100%; text-align:center">
     ${tableRows.joinToString("")}        
   </table>
 </body>
