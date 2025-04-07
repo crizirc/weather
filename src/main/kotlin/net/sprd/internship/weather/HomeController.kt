@@ -3,6 +3,7 @@ package net.sprd.internship.weather
 import net.sprd.internship.weather.openweathermap.OpenWeatherMapService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -25,9 +26,9 @@ val style="""
 """
     .trimIndent()
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
-    fun deliverImage() : String {
+    fun deliverImage(@RequestParam(required = false) lat: Double=51.33,@RequestParam(required = false) long: Double=12.35) : String {
 
-        val weather = service.getCurrentWeather(51.33, 12.35,5)
+        val weather = service.getCurrentWeather(lat, long,5)
         val tableRows = mutableListOf<String>()
         var index = 1
         weather.temperatures.forEach { temperature ->
@@ -116,6 +117,15 @@ val style="""
   <table id="weathertable" style="font-size:2vw;width: 100%; text-align:center">
     ${tableRows.joinToString("")}        
   </table>
+  <div classes="positionform"style="display:flex; align-items:center; justify-content:center;">
+  
+  <form>
+    <input type="text" id="lat" name="lat" value="Lat"><br>
+    <input type="text" id="long" name="long" value="Long"><br>
+    <input type="submit" value="Submit">
+
+  </form>
+  </div>
 </body>
 </html> 
         """.trimIndent()
@@ -124,31 +134,22 @@ val style="""
     private fun conditionAsSymbol(condition: String): String {
         var condition1 = condition
         if (condition1 == "scattered clouds") {
-            condition1 = "\uD83C\uDF25"
+            return "\uD83C\uDF25"
         }
         if (condition1 == "clear sky") {
-            condition1 = "☀"
+            return "☀"
         }
-        if (condition1 == "overcast clouds") {
-            condition1 = "☁"
+        if(condition1.contains("clouds")) {
+            return "☁"
         }
-        if (condition1 == "broken clouds") {
-            condition1 = "\uD83C\uDF25"
-        }
-        if (condition1 == "few clouds") {
-            condition1 = "\uD83C\uDF25"
-        }
-        if (condition1 == "rain") {
-            condition1 = "\uD83C\uDF27"
-        }
-        if (condition1 == "shower rain") {
+        if(condition1.contains("rain")){
             condition1 = "\uD83C\uDF27"
         }
         if (condition1 == "thunderstorm") {
             condition1 = "⛈"
         }
-        if (condition1 == "snow") {
-            condition1 = "❄"
+        if (condition1.contains("snow")) {
+            return "❄"
         }
         if (condition1 == "fog") {
             condition1 = "\uD83C\uDF2B"
