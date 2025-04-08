@@ -1,7 +1,11 @@
 {
   "short_name":"Wetter",
   "name":"Wetter",
-  "icons":[
+  "icons":[{
+    "src": "/sun.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
   ],
   "start_url":"/",
   "background_color":"#3d50a7",

@@ -104,6 +104,7 @@ class HomeController(
              font-size:4vw;
             }
        }
+     
   </style>
 </head>
 <body style = "font-family:Josefin Sans, sans-serif;">
@@ -128,7 +129,7 @@ class HomeController(
     <input type="text" id="lat" name="lat" value="Lat"><br>
     <input type="text" id="long" name="long" value="Long"><br>
     <input type="submit" value="Submit">
-
+ 
   </form>
   </div>
 </body>
