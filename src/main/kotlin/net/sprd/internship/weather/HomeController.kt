@@ -50,41 +50,9 @@ class HomeController(
 <link href="style.css" rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
   <title>Wetter</title>
-  <script type="text/javascript">
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0,
-  };
-
-  function success(pos) {
-    const crd = pos.coords;
-
-    console.log("Your current position is:");
-    console.log(`Latitude : \$\{crd.latitude\}`);
-    console.log(`Longitude: \$\{crd.longitude\}`);
-    console.log(`More or less \$\{crd.accuracy\} meters.`);
-  }
-
-  function error(err) {
-    console.warn(`ERROR(\$\{err.code\}): \$\{err.message\}`);
-  }
-
-  navigator.geolocation.getCurrentPosition(success, error, options);
-
-  </script>
-  <script>
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker
-            .register('service-worker.js')
-            .then(function (reg) {
-              console.log('Registration successful: ' + reg.scope);
-            })
-            .catch(function (err) {
-              console.error('Registration failed: ' + err);
-            });
-        }
-  </script>
+ <script
+ src="main.js"></script>
+  
 </head>
 <body style = "font-family:Josefin Sans, sans-serif;">
   <div class= "currentweatherborder" style="text-align: center;">
