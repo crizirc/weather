@@ -12,7 +12,7 @@ class HomeController(
 ) {
 val style="""
      /*@media screen and (min-width: 600px) {*/
-      body{background-color: red;}
+    
       td {
         padding: 20px;
         padding-top: 6px;
@@ -79,21 +79,35 @@ val style="""
         }
   </script>
   <style>
+    input{
+      font-size: 2vw;
+     } 
   /* Light mode */@media (prefers-color-scheme: light) {
       body {
           background-color: #ececec;
           color: #222;
          
       }
+      input{color: #222;
+  background-color: #ececec;
+  border: solid #ececec;
+}
+      
       .currentweatherborder{
       border-bottom-color: #ececec;border-bottom-width: 4vw;border-bottom-style: solid;
       }
+    
   }
   /* Dark mode */@media (prefers-color-scheme: dark) {
       body {
-          background-color:#222; ;
+          background-color:#222;
           color: #ececec;
       }
+      input{
+      color: #ececec;
+  background-color: #222;
+  border: solid #4a4a4a;
+}
       .currentweatherborder{
       border-bottom-color: #222;border-bottom-width: 4vw;border-bottom-style: solid;
       }
