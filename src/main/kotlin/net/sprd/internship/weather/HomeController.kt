@@ -10,21 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController(
     val service: OpenWeatherMapService
 ) {
-val style="""
-     /*@media screen and (min-width: 600px) {*/
-    
-      td {
-        padding: 20px;
-        padding-top: 6px;
-      }
-       @media screen and (min-width: 600px) {
-         td {
-             padding: 10px;
-             padding-top: 6px;
-            }
-       }
-"""
-    .trimIndent()
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
     fun deliverImage(@RequestParam(required = false) lat: Double=51.33,@RequestParam(required = false) long: Double=12.35) : String {
 
@@ -58,13 +43,11 @@ val style="""
              <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
-   <style>
-        $style
-   </style>
   <title>Wetter</title>
   <script>
         if ('serviceWorker' in navigator) {
@@ -99,6 +82,7 @@ val style="""
     
   }
   /* Dark mode */@media (prefers-color-scheme: dark) {
+       
       body {
           background-color:#222;
           color: #ececec;
@@ -109,10 +93,17 @@ val style="""
   border: solid #4a4a4a;
 }
       .currentweatherborder{
-      border-bottom-color: #222;border-bottom-width: 4vw;border-bottom-style: solid;
+      border-bottom-color: #222;border-bottom-width: 5vw;border-bottom-style: solid;
       }
-      
+     
   }
+   @media screen and (max-width: 600px) {
+         td {
+             padding: 10px;
+             padding-top: 6px;
+             font-size:4vw;
+            }
+       }
   </style>
 </head>
 <body style = "font-family:Josefin Sans, sans-serif;">
