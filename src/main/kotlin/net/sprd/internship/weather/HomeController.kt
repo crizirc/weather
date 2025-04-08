@@ -47,8 +47,32 @@ class HomeController(
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
   <link rel="manifest" href="/manifest.json">
   <title>Wetter</title>
+  <script type="text/javascript">
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+
+  function success(pos) {
+    const crd = pos.coords;
+
+    console.log("Your current position is:");
+    console.log(`Latitude : \$\{crd.latitude\}`);
+    console.log(`Longitude: \$\{crd.longitude\}`);
+    console.log(`More or less \$\{crd.accuracy\} meters.`);
+  }
+
+  function error(err) {
+    console.warn(`ERROR(\$\{err.code\}): \$\{err.message\}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
+
+  </script>
   <script>
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker
@@ -61,51 +85,6 @@ class HomeController(
             });
         }
   </script>
-  <style>
-    input{
-      font-size: 2vw;
-     } 
-  /* Light mode */@media (prefers-color-scheme: light) {
-      body {
-          background-color: #ececec;
-          color: #222;
-         
-      }
-      input{color: #222;
-  background-color: #ececec;
-  border: solid #ececec;
-}
-      
-      .currentweatherborder{
-      border-bottom-color: #ececec;border-bottom-width: 4vw;border-bottom-style: solid;
-      }
-    
-  }
-  /* Dark mode */@media (prefers-color-scheme: dark) {
-       
-      body {
-          background-color:#222;
-          color: #ececec;
-      }
-      input{
-      color: #ececec;
-  background-color: #222;
-  border: solid #4a4a4a;
-}
-      .currentweatherborder{
-      border-bottom-color: #222;border-bottom-width: 5vw;border-bottom-style: solid;
-      }
-     
-  }
-   @media screen and (max-width: 600px) {
-         td {
-             padding: 10px;
-             padding-top: 6px;
-             font-size:4vw;
-            }
-       }
-     
-  </style>
 </head>
 <body style = "font-family:Josefin Sans, sans-serif;">
   <div class= "currentweatherborder" style="text-align: center;">
