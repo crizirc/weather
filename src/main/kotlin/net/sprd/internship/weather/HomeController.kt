@@ -11,18 +11,15 @@ class HomeController(
     val service: OpenWeatherMapService
 ) {
     @GetMapping("/", produces = [MediaType.TEXT_HTML_VALUE])
-    fun deliverImage(@RequestParam(required = false) lat: Double=51.33,@RequestParam(required = false) long: Double=12.35) : String {
+    fun deliverImage(@RequestParam(required = false) lat: Double=51.33,@RequestParam(required = false) long: Double=12.35,@RequestParam(required = false) stepSize:Int=1 ) : String {
 
-        val weather = service.getCurrentWeather(lat, long,5)
+        val weather = service.getCurrentWeather(lat, long,5*stepSize)
         val tableRows = mutableListOf<String>()
-        var index = 1
-        weather.temperatures.forEach { temperature ->
-            if (index != 1) {
-                var condition = temperature.condition
-                condition = conditionAsSymbol(condition)
+        for (i in 0..(weather.temperatures.size -1) step stepSize){
+            val temperature = weather.temperatures[i]
 
-
-
+            var condition = temperature.condition
+            condition = conditionAsSymbol(condition)
                 tableRows.add(
                     """
     <tr>
@@ -33,12 +30,9 @@ class HomeController(
     </tr>            
         """.trimIndent()
                 )
-            }
-            index= index.plus(1)
 
         }
-        var condition = weather.temperatures[0].condition
-        condition = conditionAsSymbol(condition)
+
         return """
              <!DOCTYPE html>
 <html>
@@ -64,7 +58,7 @@ class HomeController(
     </div>
     <div style="font-size: 5vw;" title="${weather.temperatures[0].condition}">
       
-      ${condition} ${weather.temperatures[0].temperature}°C
+      ${conditionAsSymbol(weather.temperatures[0].condition)} ${weather.temperatures[0].temperature}°C
     </div>
   </div>
   <table id="weathertable" style="font-size:2vw;width: 100%; text-align:center">
@@ -73,8 +67,14 @@ class HomeController(
   <div classes="positionform"style="display:flex; align-items:center; justify-content:center;">
   
   <form>
-    <input type="text" id="lat" name="lat" value="Lat"><br>
-    <input type="text" id="long" name="long" value="Long"><br>
+  <label for="lat">Lat</label><br>
+    <input type="text" id="lat" name="lat"><br>
+     <label for="long">Long</label><br>
+    <input type="text" id="long" name="long"><br>
+       <label for="stepSize">Step Size</label><br>
+    <input type = "number" id ="stepSize" name="stepSize"><br>
+        
+
     <input type="submit" value="Submit">
  
   </form>

@@ -14,8 +14,13 @@ class OpenWeatherMapService(@Value("\${appId}") private val appId:String) {
         val requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${appId}&units=metric"
         val weatherData = RestClient.create(requestUrl).get().retrieve().body<WeatherData>()
 
+        var maxEntries = anzahleintraege
+        if (weatherData!!.list.size < anzahleintraege) {
+            maxEntries = weatherData.list.size
+        }
+
         val temps = mutableListOf<TemperatureEntry>()
-        for(i in 0..<anzahleintraege) {
+        for(i in 0..<(maxEntries-1)) {
             temps.add(TemperatureEntry(weatherData!!.list[i].main.temp, weatherData.list[i].weather[0].description,weatherData.list[i].dt_txt))
 
         }
